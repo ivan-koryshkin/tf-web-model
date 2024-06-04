@@ -1,0 +1,8 @@
+.DS_Store
+.env
+docker-compose.dev.yml
+
+.vscode/
+**/__pycache__/**
+*.keras
+media/
