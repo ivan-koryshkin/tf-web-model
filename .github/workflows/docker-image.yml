@@ -21,11 +21,13 @@ jobs:
 
     - name: Tag the image with timestamp
       run: |
+        TIMESTAMP=$(date +%s)
         docker tag tf-web-model:latest ${{ secrets.DOCKER_USERNAME }}/tf-web-model:latest
         docker tag tf-web-model:latest ${{ secrets.DOCKER_USERNAME }}/tf-web-model:$(date +%s)
+        echo "IMAGE_TAG=$TIMESTAMP" >> $GITHUB_ENV
 
 
     - name: Push the Docker image
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/tf-web-model:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/tf-web-model:$(date +%s)
+        docker push ${{ secrets.DOCKER_USERNAME }}/tf-web-model:${{ env.IMAGE_TAG }}
