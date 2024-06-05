@@ -7,12 +7,22 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ github.actor }} --password-stdin
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag tf-web-model:$(date +%s)
+      run: docker build . --file Dockerfile --tag tf-web-model:latest
+
+    - name: Tag the image with timestamp
+      run: docker tag tf-web-model:latest your_dockerhub_username/tf-web-model:$(date +%s)
+
+    - name: Push the Docker image
+      run: |
+        docker push iwankr/tf-web-model:latest
+        docker push iwankr/tf-web-model:$(date +%s)
