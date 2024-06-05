@@ -20,9 +20,12 @@ jobs:
       run: docker build . --file Dockerfile --tag tf-web-model:latest
 
     - name: Tag the image with timestamp
-      run: docker tag tf-web-model:latest your_dockerhub_username/tf-web-model:$(date +%s)
+      run: |
+        docker tag tf-web-model:latest ${{ secrets.DOCKER_USERNAME }}/tf-web-model:latest
+        docker tag tf-web-model:latest ${{ secrets.DOCKER_USERNAME }}/tf-web-model:$(date +%s)
+
 
     - name: Push the Docker image
       run: |
-        docker push iwankr/tf-web-model:latest
-        docker push iwankr/tf-web-model:$(date +%s)
+        docker push ${{ secrets.DOCKER_USERNAME }}/tf-web-model:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/tf-web-model:$(date +%s)
