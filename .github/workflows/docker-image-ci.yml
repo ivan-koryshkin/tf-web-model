@@ -1,0 +1,24 @@
+name: Docker Image Build and Push
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag tf-web-model:latest
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Tag the Docker image
+        run: docker tag tf-web-model:latest ${{ secrets.DOCKERHUB_USERNAME }}/tf-web-model:latest
+
+      - name: Push the Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/tf-web-model:latest
