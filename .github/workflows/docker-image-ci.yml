@@ -1,0 +1,26 @@
+name: DockerImageBuild
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag tf-web-model:latest
+
+      - name: Save Docker image as a tarball
+        run: docker save tf-web-model:latest -o tf-web-model.tar
+
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tf-web-model
+          path: tf-web-model.tar
