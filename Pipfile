@@ -15,8 +15,7 @@ gunicorn = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "3.11"
 
 [scripts]
-dev = "python3 main.py"
-prod = "gunicorn main:app -b 0.0.0.0:8001"
+start = "python3 main.py"
