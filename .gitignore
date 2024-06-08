@@ -6,3 +6,4 @@ docker-compose.dev.yml
 **/__pycache__/**
 *.keras
 media/
+keras_model/*.keras

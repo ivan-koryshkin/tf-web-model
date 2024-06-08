@@ -9,9 +9,10 @@ def make_app():
     ]
     return tornado.web.Application(handlers)
 
+app = make_app()
+
 async def main():
-    app = make_app()
-    app.listen(8000)
+    app.listen(8001)
     await asyncio.Event().wait()
 
 if __name__ == "__main__":

@@ -1,12 +1,8 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
-    pkg-config \
-    libavcodec-dev \
-    libavformat-dev \
-    libswscale-dev \
     libjpeg-dev \
     libpng-dev \
     libtiff-dev \
@@ -16,13 +12,17 @@ RUN apt-get update && apt-get install -y \
     libatlas-base-dev \
     gfortran \
     libhdf5-dev \
-    libhdf5-serial-dev \
-    libhdf5-103 \
+    pkg-config \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY . /app
-RUN pip install pipenv
-RUN pipenv install -v
-CMD ["pipenv", "run", "prod"]
+ENV PIP_DEFAULT_TIMEOUT=1800
+RUN pip install --upgrade pip \
+    && pip install pipenv setuptools wheel \
+    && pipenv install --deploy --ignore-pipfile -v
+
+CMD ["pipenv", "run", "start"]
