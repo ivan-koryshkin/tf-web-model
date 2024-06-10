@@ -6,7 +6,7 @@ import tornado
 
 from apps import prediction
 
-PORT = int(os.environ["WEB_MODEL_PORT", "8001"])
+PORT = int(os.environ.get("WEB_MODEL_PORT", "8001"))
 
 logger = logging.getLogger("MODEL")
 

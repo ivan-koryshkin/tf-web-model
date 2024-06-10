@@ -25,4 +25,4 @@ WORKDIR /app
 COPY . /app
 RUN pip install pipenv
 RUN pipenv install -v
-CMD ["pipenv", "run", "prod"]
+CMD ["pipenv", "run", "start"]
