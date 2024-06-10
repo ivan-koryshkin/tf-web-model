@@ -1,1 +1,5 @@
-*.keras
+media/
+coverage/
+.github/
+.env
+docker-compose.yml
