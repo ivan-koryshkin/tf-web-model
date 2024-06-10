@@ -6,7 +6,6 @@ import numpy as np
 MEDIA = os.environ["MEDIA_DIR"]
 
 def model_predict(model, request_body):
-    
     images = request_body.get("images")
     def data_generator():
         for image_name in images:

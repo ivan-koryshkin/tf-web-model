@@ -20,9 +20,6 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 COPY . /app
-ENV PIP_DEFAULT_TIMEOUT=1800
-RUN pip install --upgrade pip \
-    && pip install pipenv setuptools wheel \
-    && pipenv install --deploy --ignore-pipfile -v
-
+RUN pip install pipenv
+RUN pipenv install -v
 CMD ["pipenv", "run", "start"]
